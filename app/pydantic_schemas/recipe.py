@@ -10,6 +10,7 @@ class IngredientOnly(BaseModel):
     class Config:
         orm_mode = True
 
+
 class RecipeIngredientOut(BaseModel):
     ingredient: IngredientOnly
     quantity: float
@@ -17,6 +18,7 @@ class RecipeIngredientOut(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class RecipeBase(BaseModel):
     name: str

@@ -6,7 +6,7 @@ from sqlalchemy.orm import selectinload
 
 from database import Session
 from models import Recipe, RecipeIngredient
-from schemas.recipe import RecipeOut, RecipeCreate
+from pydantic_schemas.recipe import RecipeOut, RecipeCreate
 
 
 router = APIRouter()
@@ -22,10 +22,9 @@ def get_db():
 
 @router.get("/", response_model=List[RecipeOut])
 def get_recipes(db: Session = Depends(get_db)):
-    stmt = (
-        select(Recipe)
-        .options(
-            selectinload(Recipe.recipe_ingredients).selectinload(RecipeIngredient.ingredient)
+    stmt = select(Recipe).options(
+        selectinload(Recipe.recipe_ingredients).selectinload(
+            RecipeIngredient.ingredient
         )
     )
     recipes = db.execute(stmt).scalars().all()
@@ -36,15 +35,16 @@ def get_recipes(db: Session = Depends(get_db)):
 def get_recipe(recipe_id: int, db: Session = Depends(get_db)):
     recipe = db.query(Recipe).get(recipe_id)
     return {
-        'id': recipe.id,
-        'name': recipe.name,
-        'ingredients': [
+        "id": recipe.id,
+        "name": recipe.name,
+        "ingredients": [
             {
-                'id': ri.ingredient.id,
-                'name': ri.ingredient.name,
-                'quantity': ri.quantity,
-                'unit': ri.unit,
-            } for ri in recipe.recipe_ingredients
+                "id": ri.ingredient.id,
+                "name": ri.ingredient.name,
+                "quantity": ri.quantity,
+                "unit": ri.unit,
+            }
+            for ri in recipe.recipe_ingredients
         ],
     }
 

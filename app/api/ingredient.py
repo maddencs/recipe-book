@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from database import Session
 from models import Ingredient
-from schemas.ingredient import IngredientOut
+from pydantic_schemas.ingredient import IngredientOut
 
 router = APIRouter()
 

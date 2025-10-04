@@ -8,6 +8,7 @@ Simple little recipe book to refresh on some skills and learn some new ones.
 ### Uses
 - FastAPI
 - SQLAlchemy
+- GraphQL
 - Pydantic
 - Docker
 - alembic

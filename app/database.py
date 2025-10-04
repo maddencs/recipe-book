@@ -14,6 +14,7 @@ engine = create_engine(
     future=True,
 )
 
+
 # (Optional but recommended) Enforce FK constraints in SQLite
 @event.listens_for(engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
@@ -22,7 +23,9 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor.execute("PRAGMA foreign_keys=ON")
     cursor.close()
 
+
 Session = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
+
 
 class Base(DeclarativeBase):
     pass
